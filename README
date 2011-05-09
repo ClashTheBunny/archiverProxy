@@ -1,1 +1,6 @@
 A simple archiving proxy.  It saves pretty much everything that goes through it.
+
+To save only selective sites or sections of sites, edit the proxy.pac in this directory as you see fit and add:
+http://localhost:8000/proxy.pac
+as your automatic proxy config URL.  Every time you start your browser while archiverProxy is running, it will get the file.
+If it isn't running, then your computer goes ahead with business as usual.
