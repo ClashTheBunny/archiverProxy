@@ -111,7 +111,7 @@ import random
 import binascii
 import traceback
 import stat
-from md5 import md5
+from hashlib import md5
 
 import BaseHTTPServer
 import urlparse
@@ -622,7 +622,7 @@ class AsyncHTTPProxyReceiver(asynchat.async_chat):
 			self.sender.close_when_done()
 			del self.sender  # break circular reference
 		self.close()
-	
+
 	def show_response(self, code, body, title=None, response=None):
 		if not response:
 			response = BaseHTTPServer.BaseHTTPRequestHandler.responses[code][0]
@@ -703,42 +703,6 @@ def kill_external_proxy():
 	except:
 		log('Could not connect to locahost 8000, oh well...\n')
 	
-def kill_external_proxy_win32():
-	import win32api, win32pdhutil, win32con
-	# XXX This code was taken from the Python1.6 Windows distribution.
-
-	# Change suggested by Dan Knierim, who found that this performed a
-	# "refresh", allowing us to kill processes created since this was run
-	# for the first time.
-	try:
-		win32pdhutil.GetPerformanceAttributes(
-			'Process','ID Process','archiverproxy')
-	except:
-		pass
-
-	try:
-		pids = win32pdhutil.FindPerformanceAttributesByName('archiverproxy')
-	except:
-		log("Not enough win32pdh library calls supported on this OS\n")
-		log("older archiverproxy processes will not be automatically killed.\n")
-		return
-
-	# If _my_ pid in there, remove it!
-	try:
-		pids.remove(win32api.GetCurrentProcessId())
-	except ValueError, e:
-		log("Strange, this proxy wasn't in the process list.\n")
-		pass
-
-	if pids:
-		for pid in pids:
-			log("Attempting to terminate pid "+str(pid)+"...\n")
-			handle = win32api.OpenProcess(win32con.PROCESS_TERMINATE, 0, pid)
-			win32api.TerminateProcess(handle,0)
-			win32api.CloseHandle(handle)
-	else:
-		log("No external proxies found.\n")
-	
 if __name__ == '__main__':
 	# Kill the other proxies:
 	kill_external_proxy()
@@ -779,6 +743,4 @@ if __name__ == '__main__':
 
 	ps = AsyncHTTPProxyServer(PORT)
 	log("Starting service...\n")
-	
 	asyncore.loop()
-
