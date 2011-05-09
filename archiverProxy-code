@@ -10,9 +10,11 @@ http://logicerror.com/archiverProxy
 __version__ = "0.56 (World Traveler)"
 # Thanks to DanC for the EWOULDBLOCK patch!
 
-__author__  =   "Aaron Swartz <http://www.aaronsw.com/>"
-__credits__ = """with help from Sean B. Palmer <http://purl.org/net/sbp/>
-based on an idea by Gerald Oskoboiny <http://impressive.net/people/gerald/>
+__author__  =   "Randall Mason"
+__credits__ = """This is an almost complete copy of archiverProxy by
+Aaron Swartz <http://www.aaronsw.com/> with help from Sean B. Palmer
+<http://purl.org/net/sbp/> based on an idea by Gerald Oskoboiny
+<http://impressive.net/people/gerald/>
 
 Code based on AsyncMojoProxy.py,v 1.13 2000/11/14 23:56:30 nejucomo Exp
 http://cvs.sf.net/cgi-bin/viewcvs.cgi/mojonation/evil/proxy/AsyncMojoProxy.py
@@ -22,7 +24,7 @@ based on a combination of code from the following sources:
   munchy.py by Neil Schemenauer <nascheme@enme.ucalgary.ca>
 """
 
-__copyright__ = ""
+__copyright__ = "2011 Randall Mason"
 __license__ = "This file is licensed under the GNU Lesser General Public License v2.1. See the file COPYING or visit http://www.gnu.org/ for details."
 
 """
