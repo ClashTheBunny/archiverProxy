@@ -136,8 +136,7 @@ if sys.platform == 'win32' and not ALLOW_DEBUG_ON_WIN32:
 	log = dummylog
 
 def handle_error(self):
-	if (sys.exc_type == socket.error and (sys.exc_value[0] == 32 or sys.exc_value[0] == 9)) or (
-		sys.exc_type == AttributeError):
+	if (sys.exc_type == socket.error and (sys.exc_value[0] == 32 or sys.exc_value[0] == 9)) or (sys.exc_type == AttributeError):
 		# ignore these errors
 		self.handle_close() # something is pretty broken, close it
 		return
@@ -395,8 +394,9 @@ class AsyncHTTPProxySender(asynchat.async_chat):
 	def handle_connect(self):
 		log('(%d) S handle_connect\n' % self.id, 3)
 		try:
-			if sys.platform != 'win32':
-				self.socket.recv(0)  # check for any socket errors during connect
+			# Causes problems with modern Linux/Mac systems.  Works without.
+			#if sys.platform != 'win32':
+			#	self.socket.recv(0)  # check for any socket errors during connect
 			self.receiver.sender_is_connected()
 		except socket.error, e:
 			log('(%d) OOO %s\n' % (self.id, e))
@@ -694,6 +694,7 @@ def kill_external_proxy():
 		try:
 			s.connect(('localhost', 8000))
 			s.send('quit\r\n')
+			time.sleep(1)
 		finally:
 			s.close()
 	except:
@@ -751,7 +752,7 @@ if __name__ == '__main__':
 	if len(sys.argv) >= 2:
 		PORT = int(sys.argv[1])
 
-	if len(sys.argv) > 3 :	# 3th param: the next-step HTTP proxy can specified here (overrides the environment variable)
+	if len(sys.argv) >= 3 :	# 3th param: the next-step HTTP proxy can specified here (overrides the environment variable)
 		os.environ['http_proxy'] = sys.argv[3]
 	# display which proxy we're using
 	http_proxy = os.environ.get('http_proxy')
