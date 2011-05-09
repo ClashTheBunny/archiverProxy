@@ -22,7 +22,8 @@ based on a combination of code from the following sources:
   munchy.py by Neil Schemenauer <nascheme@enme.ucalgary.ca>
 """
 
-__copyright__ = "This program is free software."
+__copyright__ = ""
+__license__ = "This file is licensed under the GNU Lesser General Public License v2.1. See the file COPYING or visit http://www.gnu.org/ for details."
 
 """
 REVISION HISTORY:
